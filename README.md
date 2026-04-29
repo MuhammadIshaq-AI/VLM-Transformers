@@ -1,25 +1,47 @@
 # VLM-Transformers
-This repository includes the creation of vision language model from scratch, applying deep learning and Pytorch library techniques
+This repository includes the creation of a Vision Language Model from scratch, applying deep learning and PyTorch library techniques.
 
-#First of all we are going to install the Pytorch and check if we have CUDA enabled gpu.
+## Project Structure
+```text
+VLM-Transformers/
+├── src/                    # Core source code
+│   ├── models/             # Model architectures (Vision Encoder, LLM, Projection)
+│   ├── data/               # Data loading and preprocessing logic
+│   ├── utils/              # Helper functions (logging, image processing)
+│   └── training/           # Training loops and optimization logic
+├── scripts/                # Utility scripts (GPU checks, evaluation)
+├── configs/                # Configuration files (hyperparameters)
+├── notebooks/              # Jupyter Notebooks for experimentation
+├── tests/                  # Unit tests
+├── .gitignore              # Git ignore file
+├── requirements.txt        # Dependencies
+└── README.md
+```
 
-* Install the Pytorch with CUDA support:
-    $ conda activate torch_env
-    $ conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia 
-    $ conda install ipykernel
+## Setup Instructions
 
-#Second we are going to check if we have CUDA enabled gpu.
-    Run the check.py file:
-    $ python check.py
+* **Install PyTorch with CUDA support:**
+    ```bash
+    conda activate torch_env
+    conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia 
+    conda install ipykernel
+    ```
 
+* **Verify CUDA Support:**
+    ```bash
+    python scripts/check_gpu.py
+    ```
+
+### GPU Verification Output:
+```text
 CUDA is available
 CUDA version: 12.1
 CUDA capabilities: (8, 6)
 CUDA devices: 1
 CUDA current device: 0
 CUDA device name: NVIDIA GeForce RTX 3050 6GB Laptop GPU
-CUDA max memory: 6.441926656 GB
+CUDA max memory: 6.44 GB
+```
 
-If Cuda is not avalable then we can not create the vision language model from scratch
-becuase it will take to much time and memory to train the model on CPU
+> **Note:** Creating a Vision Language Model from scratch requires a CUDA-enabled GPU for efficient training.
 

@@ -1,0 +1,10 @@
+torch
+torchvision
+torchaudio
+numpy
+matplotlib
+tqdm
+pillow
+pyyaml
+tensorboard
+ipykernel
