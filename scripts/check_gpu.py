@@ -1,3 +1,4 @@
+#This script is used to check if the CUDA is available
 import torch
 import sys
 import os
