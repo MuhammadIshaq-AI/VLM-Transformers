@@ -3,8 +3,10 @@ torchvision
 torchaudio
 numpy
 matplotlib
+seaborn
 tqdm
 pillow
 pyyaml
 tensorboard
 ipykernel
+transformers
