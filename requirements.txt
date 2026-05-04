@@ -10,3 +10,4 @@ pyyaml
 tensorboard
 ipykernel
 transformers
+gradio

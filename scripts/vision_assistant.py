@@ -28,6 +28,32 @@ import torchvision.transforms as T
 import matplotlib
 matplotlib.use('Agg')  # Non-interactive backend for web app
 import matplotlib.pyplot as plt
+from collections import defaultdict
+import time
+
+# ─── Rate Limiting Configuration ────────────────────────────────
+# Limits each IP to 10 requests per minute
+RATE_LIMIT_WINDOW = 60  # seconds
+RATE_LIMIT_MAX_REQUESTS = 10
+_request_history = defaultdict(list)
+
+def is_rate_limited(request: gr.Request):
+    """Checks if the client IP has exceeded the rate limit."""
+    if request is None:
+        return False
+    
+    client_ip = request.client.host
+    now = time.time()
+    
+    # Remove timestamps older than the window
+    _request_history[client_ip] = [t for t in _request_history[client_ip] if now - t < RATE_LIMIT_WINDOW]
+    
+    if len(_request_history[client_ip]) >= RATE_LIMIT_MAX_REQUESTS:
+        return True
+    
+    _request_history[client_ip].append(now)
+    return False
+
 
 # ─── Lazy-load models (only when first used) ────────────────────
 _blip_processor = None
@@ -94,8 +120,11 @@ def get_custom_vit():
 # Feature 1: Image Captioning
 # ═══════════════════════════════════════════════════════════════════
 
-def caption_image(image):
+def caption_image(image, request: gr.Request = None):
     """Generate a caption for the uploaded image."""
+    if is_rate_limited(request):
+        return "⚠️ Rate limit exceeded (10 req/min). Please wait a moment before trying again."
+
     if image is None:
         return "Please upload an image first!"
 
@@ -126,8 +155,11 @@ def caption_image(image):
 # Feature 2: Visual Q&A
 # ═══════════════════════════════════════════════════════════════════
 
-def answer_question(image, question):
+def answer_question(image, question, request: gr.Request = None):
     """Answer a question about the image."""
+    if is_rate_limited(request):
+        return "⚠️ Rate limit exceeded (10 req/min). Please wait a moment before trying again."
+
     if image is None:
         return "Please upload an image first!"
     if not question or question.strip() == "":
