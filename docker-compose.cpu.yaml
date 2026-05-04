@@ -1,0 +1,12 @@
+services:
+  vision-assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    container_name: vlm_assistant_cpu
+    ports:
+      - "7860:7860"
+    volumes:
+      - .:/app
+      - ~/.cache/huggingface:/root/.cache/huggingface # Persistent cache for model weights
+    restart: unless-stopped
