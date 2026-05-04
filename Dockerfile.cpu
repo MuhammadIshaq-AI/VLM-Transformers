@@ -19,6 +19,9 @@ WORKDIR /app
 # Copy requirements
 COPY requirements.txt .
 
+# Upgrade pip and install typing-extensions to avoid dependency conflicts
+RUN pip install --no-cache-dir --upgrade pip typing-extensions
+
 # Install CPU-specific PyTorch (Version 2.6.0+ required for security)
 RUN pip install --no-cache-dir "torch>=2.6.0" "torchvision>=0.21.0" "torchaudio>=2.6.0" --index-url https://download.pytorch.org/whl/cpu
 
