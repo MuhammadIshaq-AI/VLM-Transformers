@@ -11,3 +11,6 @@ tensorboard
 ipykernel
 transformers
 gradio
+django
+django-crispy-forms
+crispy-bootstrap5
