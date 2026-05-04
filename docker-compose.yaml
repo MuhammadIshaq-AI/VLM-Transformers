@@ -1,0 +1,19 @@
+services:
+  vision-assistant:
+    build: .
+    container_name: vlm_assistant
+    ports:
+      - "7860:7860"
+    volumes:
+      - .:/app
+      - ~/.cache/huggingface:/root/.cache/huggingface # Persistent cache for model weights
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    restart: unless-stopped
